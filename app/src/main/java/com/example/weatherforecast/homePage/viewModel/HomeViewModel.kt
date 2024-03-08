@@ -1,9 +1,10 @@
-package com.example.weatherForecast.homePage.viewModel
+package com.example.weatherforecast.homePage.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherForecast.model.repository.IWeatherRepository
-import com.example.weatherForecast.model.utils.ApiState
+import com.example.weatherforecast.model.models.Favorite
+import com.example.weatherforecast.model.repository.IWeatherRepository
+import com.example.weatherforecast.model.utils.ApiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,8 +13,6 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(var repository: IWeatherRepository) :ViewModel() {
 
-//    private var mutableResponseList = MutableLiveData<Weather>()
-//    val responseBody: LiveData<Weather> = mutableResponseList
     private var _mutableResponseList: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Loading)
     var responseList: StateFlow<ApiState> = _mutableResponseList
 
@@ -29,5 +28,11 @@ class HomeViewModel(var repository: IWeatherRepository) :ViewModel() {
 
         }
     }
+    fun addToFavorite(favorite: Favorite){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertFavorite(favorite)
+        }
+    }
+
 
 }

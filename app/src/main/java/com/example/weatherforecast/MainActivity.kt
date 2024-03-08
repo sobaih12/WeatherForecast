@@ -12,8 +12,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import com.example.weatherForecast.model.utils.Constants
 import com.example.weatherforecast.homePage.view.HomeActivity
+import com.example.weatherforecast.model.utils.Constants
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest

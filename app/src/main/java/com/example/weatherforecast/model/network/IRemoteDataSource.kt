@@ -1,7 +1,7 @@
-package com.example.weatherForecast.model.network
+package com.example.weatherforecast.model.network
 
-import com.example.weatherForecast.model.models.Weather
-import com.example.weatherForecast.model.utils.Constants
+import com.example.weatherforecast.model.models.Weather
+import com.example.weatherforecast.model.utils.Constants
 import retrofit2.http.Query
 
 interface IRemoteDataSource {

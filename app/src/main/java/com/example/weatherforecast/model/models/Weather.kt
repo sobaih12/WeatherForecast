@@ -1,4 +1,5 @@
-package com.example.weatherForecast.model.models
+package com.example.weatherforecast.model.models
+
 
 data class Weather(
 	val current: Current? = null,

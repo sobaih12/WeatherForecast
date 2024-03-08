@@ -1,4 +1,5 @@
 package com.example.weatherforecast.homePage.view;
+
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,19 +11,18 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherForecast.homePage.view.DailyAdapter
-import com.example.weatherForecast.homePage.view.HourlyAdapter
-import com.example.weatherForecast.homePage.viewModel.HomeViewModel
-import com.example.weatherForecast.homePage.viewModel.HomeViewModelFactory
-import com.example.weatherForecast.model.database.LocalDataSource
-import com.example.weatherForecast.model.network.RemoteDataSource
-import com.example.weatherForecast.model.repository.WeatherRepository
-import com.example.weatherForecast.model.utils.ApiState
-import com.example.weatherForecast.model.utils.Constants
-import com.example.weatherForecast.model.utils.Converter
 import com.example.weatherforecast.R
 import com.example.weatherforecast.databinding.ActivityHomeBinding
-import com.example.weatherforecast.favoritePage.FavoriteActivity
+import com.example.weatherforecast.favoritePage.view.FavoriteActivity
+import com.example.weatherforecast.homePage.viewModel.HomeViewModel
+import com.example.weatherforecast.homePage.viewModel.HomeViewModelFactory
+import com.example.weatherforecast.model.database.LocalDataSource
+import com.example.weatherforecast.model.models.Location
+import com.example.weatherforecast.model.network.RemoteDataSource
+import com.example.weatherforecast.model.repository.WeatherRepository
+import com.example.weatherforecast.model.utils.ApiState
+import com.example.weatherforecast.model.utils.Constants
+import com.example.weatherforecast.model.utils.Converter
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -32,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
     lateinit var homeViewModelFactory: HomeViewModelFactory
     val homeViewModel : HomeViewModel by viewModels { homeViewModelFactory }
     val remoteDataSource = RemoteDataSource()
-    val localDataSource = LocalDataSource()
     private var initialY = 0f
     private var initialHeight = 0
     private val minHeightInDp = 324
@@ -43,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val repository = WeatherRepository.getInstance(localData = localDataSource, remoteData =  remoteDataSource)
+        val repository = WeatherRepository.getInstance(localData = LocalDataSource.getInstance(this), remoteData =  remoteDataSource)
         homeViewModelFactory = HomeViewModelFactory(repository)
 
         hourlyAdapter = HourlyAdapter()
@@ -57,11 +56,11 @@ class HomeActivity : AppCompatActivity() {
 
         /*binding.bottomSheet.setOnTouchListener { view, event ->
             when (event.action) {
-//                DragEvent.ACTION_DRAG_STARTED -> {
-//                    val layoutParams = view.layoutParams
-//                    layoutParams.height = dpToPx(324f, this) // Set your desired height in pixels
-//                    view.layoutParams = layoutParams
-//                }
+                DragEvent.ACTION_DRAG_STARTED -> {
+                    val layoutParams = view.layoutParams
+                    layoutParams.height = dpToPx(324f, this) // Set your desired height in pixels
+                    view.layoutParams = layoutParams
+                }
 
                 DragEvent.ACTION_DRAG_STARTED -> {
                     Log.i("TAG", "Samir: ACTION_DRAG_STARTED")
@@ -91,8 +90,9 @@ class HomeActivity : AppCompatActivity() {
 
         val latitude = intent.getDoubleExtra("Lat",0.0)
         val longitude = intent.getDoubleExtra("Lon",0.0)
-        homeViewModel.getHomeData(latitude.toString(),longitude.toString(),
-            Constants.LANGUAGE_EN,Constants.UNITS_CELSIUS)
+        val location = Location(longitude,latitude)
+
+        homeViewModel.getHomeData(location.locationLat.toString(),location.locationLon.toString(),Constants.LANGUAGE_EN, Constants.UNITS_CELSIUS)
         lifecycleScope.launch {
             homeViewModel.responseList.collect{
                 when(it){

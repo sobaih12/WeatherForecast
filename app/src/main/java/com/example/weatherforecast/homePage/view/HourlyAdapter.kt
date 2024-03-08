@@ -1,13 +1,13 @@
-package com.example.weatherForecast.homePage.view
+package com.example.weatherforecast.homePage.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherForecast.model.models.HourlyItem
-import com.example.weatherForecast.model.utils.Converter
 import com.example.weatherforecast.databinding.HourlyCellBinding
+import com.example.weatherforecast.model.models.HourlyItem
+import com.example.weatherforecast.model.utils.Converter
 
 
 class HourlyAdapter : ListAdapter<HourlyItem, HourlyAdapter.HourlyViewHolder>(HourlyItemDiffCallback()) {

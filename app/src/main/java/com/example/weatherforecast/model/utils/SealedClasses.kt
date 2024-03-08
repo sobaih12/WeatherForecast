@@ -1,6 +1,6 @@
-package com.example.weatherForecast.model.utils
+package com.example.weatherforecast.model.utils
 
-import com.example.weatherForecast.model.models.Weather
+import com.example.weatherforecast.model.models.Weather
 
 
 sealed class ApiState{

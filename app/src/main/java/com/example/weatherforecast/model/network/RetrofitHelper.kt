@@ -1,7 +1,7 @@
-package com.example.weatherForecast.model.network
+package com.example.weatherforecast.model.network
 
-import com.example.weatherForecast.model.network.RetrofitHelper.retrofit
-import com.example.weatherForecast.model.utils.Constants
+import com.example.weatherforecast.model.network.RetrofitHelper.retrofit
+import com.example.weatherforecast.model.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

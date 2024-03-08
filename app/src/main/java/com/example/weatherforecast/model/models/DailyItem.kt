@@ -1,4 +1,4 @@
-package com.example.weatherForecast.model.models
+package com.example.weatherforecast.model.models
 
 data class DailyItem(
 	val moonset: Int? = null,

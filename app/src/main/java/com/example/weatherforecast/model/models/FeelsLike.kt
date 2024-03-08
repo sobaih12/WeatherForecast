@@ -1,4 +1,4 @@
-package com.example.weatherForecast.model.models
+package com.example.weatherforecast.model.models
 
 data class FeelsLike(
 	val eve: Any? = null,

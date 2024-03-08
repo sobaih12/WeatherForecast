@@ -1,4 +1,4 @@
-package com.example.weatherForecast.model.utils
+package com.example.weatherforecast.model.utils
 
 import android.content.Context
 import android.location.Address

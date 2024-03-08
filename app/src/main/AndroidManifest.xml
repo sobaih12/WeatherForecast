@@ -26,10 +26,10 @@
         <!--            android:name="com.google.android.geo.API_KEY"-->
         <!--            android:value="AIzaSyAbuHdF1hB_ddtCtgEZ7iE3cDqXk4zpVJU" />-->
         <activity
-            android:name=".favoritePage.MapActivity"
+            android:name=".favoritePage.view.MapActivity"
             android:exported="false" />
         <activity
-            android:name=".favoritePage.FavoriteActivity"
+            android:name=".favoritePage.view.FavoriteActivity"
             android:exported="false" />
         <activity
             android:name=".homePage.view.HomeActivity"

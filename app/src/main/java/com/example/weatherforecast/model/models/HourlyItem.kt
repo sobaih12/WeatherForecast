@@ -1,4 +1,4 @@
-package com.example.weatherForecast.model.models
+package com.example.weatherforecast.model.models
 
 data class HourlyItem(
 	val temp: Any? = null,

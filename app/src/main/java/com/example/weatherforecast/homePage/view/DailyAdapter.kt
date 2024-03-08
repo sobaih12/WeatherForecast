@@ -1,13 +1,13 @@
-package com.example.weatherForecast.homePage.view
+package com.example.weatherforecast.homePage.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherForecast.model.models.DailyItem
-import com.example.weatherForecast.model.utils.Converter
 import com.example.weatherforecast.databinding.DailyCellBinding
+import com.example.weatherforecast.model.models.DailyItem
+import com.example.weatherforecast.model.utils.Converter
 
 
 class DailyAdapter : ListAdapter<DailyItem, DailyAdapter.DailyViewHolder>(DailyItemDiffCallback()) {
@@ -27,7 +27,7 @@ class DailyAdapter : ListAdapter<DailyItem, DailyAdapter.DailyViewHolder>(DailyI
             binding.apply {
                 dayCell.text = if (position == 0) "Today" else if (position == 1) "Tomorrow" else item.dt?.let { Converter.convertUnixTimeToDay(it) }
                 tempHighCell.text = "H:"+ Converter.convertTemperatureToString(item.temp?.max)
-                tempLowCell.text = "L:"+Converter.convertTemperatureToString(item.temp?.min)
+                tempLowCell.text = "L:"+ Converter.convertTemperatureToString(item.temp?.min)
             }
         }
     }

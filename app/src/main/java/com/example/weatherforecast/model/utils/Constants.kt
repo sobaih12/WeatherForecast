@@ -1,4 +1,4 @@
-package com.example.weatherForecast.model.utils
+package com.example.weatherforecast.model.utils
 
 object Constants {
     const val BASE_URL = "https://api.openweathermap.org/data/3.0/"

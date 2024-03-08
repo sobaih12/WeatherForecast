@@ -1,15 +1,14 @@
-package com.example.weatherforecast.homePage.viewModel
+package com.example.weatherforecast.favoritePage.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherforecast.model.repository.IWeatherRepository
 
-
-class HomeViewModelFactory(private val repository: IWeatherRepository) : ViewModelProvider.Factory {
+class FavoriteViewModelFactory(private val repository: IWeatherRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(repository) as T
+            return FavoriteViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

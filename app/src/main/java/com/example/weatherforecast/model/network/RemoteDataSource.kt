@@ -1,6 +1,6 @@
-package com.example.weatherForecast.model.network
+package com.example.weatherforecast.model.network
 
-import com.example.weatherForecast.model.models.Weather
+import com.example.weatherforecast.model.models.Weather
 
 
 class RemoteDataSource:IRemoteDataSource {
