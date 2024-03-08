@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/starry_mountain"
+    tools:context=".settingPage.SettingActivity">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textColor="@color/grey"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/languageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Language"
+        android:textColor="@color/grey"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <RadioGroup
+        android:id="@+id/languageRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/languageTextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp">
+
+        <RadioButton
+            android:id="@+id/englishRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/offWhite"
+            android:text="English" />
+
+        <RadioButton
+            android:id="@+id/arabicRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/offWhite"
+            android:text="Arabic" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/unitTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Units"
+        android:textSize="20sp"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/languageRadioGroup"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <RadioGroup
+        android:id="@+id/unitRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/unitTextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp">
+
+        <RadioButton
+            android:id="@+id/celsiusRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/offWhite"
+            android:text="Celsius" />
+
+        <RadioButton
+            android:id="@+id/fahrenheitRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/offWhite"
+            android:text="Fahrenheit" />
+
+        <RadioButton
+            android:id="@+id/kelvinRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/offWhite"
+            android:text="Kelvin" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

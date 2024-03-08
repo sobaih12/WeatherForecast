@@ -16,6 +16,7 @@
         app:layout_constraintBottom_toTopOf="@+id/favoriteRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/text_cities"
         android:layout_width="wrap_content"
@@ -28,8 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoriteRecyclerView"
         android:layout_width="match_parent"
@@ -38,13 +37,13 @@
         android:layout_marginBottom="-12dp"
         app:layout_constraintBottom_toTopOf="@id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_cities"
+        app:layout_constraintVertical_bias="1.0"
         tools:itemCount="20"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/favorite_cell" />
-
-    <!-- Your other views -->
 
     <ImageView
         android:id="@+id/imageView2"
@@ -90,5 +89,4 @@
         app:layout_constraintTop_toTopOf="@+id/imageView2"
         app:layout_constraintVertical_bias="0.567" />
 
-    <!-- Floating Action Button -->
 </androidx.constraintlayout.widget.ConstraintLayout>

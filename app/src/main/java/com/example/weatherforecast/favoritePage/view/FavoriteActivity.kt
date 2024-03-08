@@ -44,11 +44,13 @@ class FavoriteActivity : AppCompatActivity(),OnDeleteClickListener {
         binding.addToFavorite.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.home.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
+            
         }
     }
 

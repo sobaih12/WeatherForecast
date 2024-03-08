@@ -23,6 +23,8 @@ import com.example.weatherforecast.model.repository.WeatherRepository
 import com.example.weatherforecast.model.utils.ApiState
 import com.example.weatherforecast.model.utils.Constants
 import com.example.weatherforecast.model.utils.Converter
+import com.example.weatherforecast.model.utils.PreferenceManager
+import com.example.weatherforecast.settingPage.SettingActivity
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -37,7 +39,44 @@ class HomeActivity : AppCompatActivity() {
     private val minHeightInDp = 324
 
 
+    override fun onResume() {
+        super.onResume()
+        val language = PreferenceManager.getLanguage(this)
+        val unit = PreferenceManager.getTempUnit(this)
+        val longitude = PreferenceManager.getLongitude(this)
+        val latitude = PreferenceManager.getLatitude(this)
 
+        homeViewModel.getHomeData(latitude.toString(),longitude.toString(),language.toString(), unit.toString())
+        lifecycleScope.launch {
+            homeViewModel.responseList.collect{
+                when(it){
+                    is ApiState.Success ->{
+                        val address = Converter.getAddressEnglish(this@HomeActivity,latitude,longitude)
+                        val currentTemp = Converter.convertTemperatureToString(it.weatherItem.current?.temp?.toString())
+                        val weatherDesc = it.weatherItem.current?.weather?.get(0)?.main
+                        switchBetweenHourlyAndDaily(20.0F,16.0F,
+                            R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
+                        hourlyAdapter.submitList(it.weatherItem.hourly)
+                        dailyAdapter.submitList(it.weatherItem.daily)
+                        binding.cityName.text = address
+                        binding.tempDesc.text = "$currentTemp | $weatherDesc"
+                        binding.dailyForecast.setOnClickListener {
+                            switchBetweenHourlyAndDaily(16.0F,20.0F,R.color.grey,R.color.white,View.INVISIBLE,View.VISIBLE)
+                        }
+                        binding.hourlyForecast.setOnClickListener {
+                            switchBetweenHourlyAndDaily(20.0F,16.0F,R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
+                        }
+                    }
+                    is ApiState.Loading ->{
+
+                    }
+                    else ->{
+                        Toast.makeText(this@HomeActivity, "error is ${it}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -88,42 +127,14 @@ class HomeActivity : AppCompatActivity() {
             true
         }*/
 
-        val latitude = intent.getDoubleExtra("Lat",0.0)
-        val longitude = intent.getDoubleExtra("Lon",0.0)
-        val location = Location(longitude,latitude)
 
-        homeViewModel.getHomeData(location.locationLat.toString(),location.locationLon.toString(),Constants.LANGUAGE_EN, Constants.UNITS_CELSIUS)
-        lifecycleScope.launch {
-            homeViewModel.responseList.collect{
-                when(it){
-                    is ApiState.Success ->{
-                        val address = Converter.getAddressEnglish(this@HomeActivity,latitude,longitude)
-                        val currentTemp = Converter.convertTemperatureToString(it.weatherItem.current?.temp?.toString())
-                        val weatherDesc = it.weatherItem.current?.weather?.get(0)?.main
-                        switchBetweenHourlyAndDaily(20.0F,16.0F,
-                            R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
-                        hourlyAdapter.submitList(it.weatherItem.hourly)
-                        dailyAdapter.submitList(it.weatherItem.daily)
-                        binding.cityName.text = address
-                        binding.tempDesc.text = "$currentTemp | $weatherDesc"
-                        binding.dailyForecast.setOnClickListener {
-                            switchBetweenHourlyAndDaily(16.0F,20.0F,R.color.grey,R.color.white,View.INVISIBLE,View.VISIBLE)
-                        }
-                        binding.hourlyForecast.setOnClickListener {
-                            switchBetweenHourlyAndDaily(20.0F,16.0F,R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
-                        }
-                    }
-                    is ApiState.Loading ->{
 
-                    }
-                    else ->{
-                        Toast.makeText(this@HomeActivity, "error is ${it}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
         binding.favorite.setOnClickListener {
             var intent = Intent(this, FavoriteActivity::class.java)
+            startActivity(intent)
+        }
+        binding.setting.setOnClickListener {
+            var intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
         }
 

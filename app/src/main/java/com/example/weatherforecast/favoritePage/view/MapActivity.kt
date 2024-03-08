@@ -17,6 +17,7 @@ import com.example.weatherforecast.model.repository.WeatherRepository
 import com.example.weatherforecast.model.utils.ApiState
 import com.example.weatherforecast.model.utils.Constants
 import com.example.weatherforecast.model.utils.Converter
+import com.example.weatherforecast.model.utils.PreferenceManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -72,8 +73,8 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         val map = googleMap
 
-        val initialLocation = LatLng(30.58, 32.27)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 3F))
+        val initialLocation = LatLng(PreferenceManager.getLatitude(this),PreferenceManager.getLongitude(this))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 5F))
 
         map.addMarker(MarkerOptions().position(initialLocation))
         // Set up marker click listener

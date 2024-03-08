@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.example.weatherforecast.homePage.view.HomeActivity
 import com.example.weatherforecast.model.utils.Constants
+import com.example.weatherforecast.model.utils.PreferenceManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -64,13 +65,17 @@ class MainActivity : AppCompatActivity() {
 
         var myLocationCallBack = object : LocationCallback(){
             override fun onLocationResult(p0: LocationResult) {
-                latitude = p0?.lastLocation?.latitude
-                longitude = p0?.lastLocation?.longitude
-                Log.i("Location", "onLocationResult: "+latitude)
-                Log.i("Location", "onLocationResult: "+longitude)
+                latitude = p0.lastLocation?.latitude
+                longitude = p0.lastLocation?.longitude
+                //check if the boolean is false
                 if(!isLocationReceived) {
+                    // make the boolean true
                     isLocationReceived=true
-                    splash(longitude,latitude)
+                    //do what you want here
+                    // your logic here
+                    PreferenceManager.saveLatitude(this@MainActivity,latitude.toString().toDouble())
+                    PreferenceManager.saveLongitude(this@MainActivity,longitude.toString().toDouble())
+                    splash()
                 }
             }
         }
@@ -107,11 +112,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun splash(lon:Double?,lat:Double?){
+    private fun splash(){
         Handler().postDelayed({
             val intent = Intent(this, HomeActivity::class.java)
-            intent.putExtra("Lon",lon)
-            intent.putExtra("Lat",lat)
             startActivity(intent)
             finish()
         }, Constants.SPLASH_DISPLAY_LENGTH)
