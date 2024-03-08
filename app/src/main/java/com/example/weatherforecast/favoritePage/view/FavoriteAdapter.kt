@@ -31,7 +31,7 @@ class FavoriteAdapter(private val context:Context,private val onDeleteClickListe
                 lowTemp.text = "L:"+ Converter.convertTemperatureToString(item.favMin)
                 temp.text = Converter.convertTemperatureToString(item.favTemp)
                 weatherDesc.text = item.favMain
-                imageView.setOnClickListener {
+                weatherIcon.setOnClickListener {
                     onDeleteClickListener.onDeleteFromFavorite(item)
                 }
             }
