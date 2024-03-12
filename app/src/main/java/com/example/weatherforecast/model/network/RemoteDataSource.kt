@@ -8,8 +8,8 @@ class RemoteDataSource:IRemoteDataSource {
         lat: String?,
         lon: String?,
         appId: String,
-        lang: String,
-        units: String
+        lang: String?,
+        units: String?
     ): Weather {
         return WeatherAPI.retrofitService.getCurrentWeather(lat,lon, appId, lang, units)
     }

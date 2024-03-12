@@ -29,4 +29,9 @@ class FavoriteViewModel(var repository: IWeatherRepository) : ViewModel() {
             getFavoriteList()
         }
     }
+    fun updateFavoriteList(favorite :Favorite){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateAll(favorite)
+        }
+    }
 }

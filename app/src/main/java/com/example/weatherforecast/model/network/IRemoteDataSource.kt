@@ -9,7 +9,7 @@ interface IRemoteDataSource {
         @Query("lat") lat: String?,
         @Query("lon") lon: String?,
         @Query("appid") appId: String = Constants.ApiKey,
-        @Query("lang") lang: String,
-        @Query("units") units: String
+        @Query("lang") lang: String?,
+        @Query("units") units: String?
     ): Weather
 }

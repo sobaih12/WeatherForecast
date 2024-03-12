@@ -41,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         val language = PreferenceManager.getLanguage(this)
         val unit = PreferenceManager.getTempUnit(this)
         val longitude = PreferenceManager.getLongitude(this)

@@ -19,8 +19,8 @@ class HomeViewModel(var repository: IWeatherRepository) :ViewModel() {
 
     fun getHomeData(lat: String?,
                     lon: String?,
-                    lang: String,
-                    units: String){
+                    lang: String?,
+                    units: String?){
         viewModelScope.launch(Dispatchers.IO){
            repository.getCurrentWeather(lat,lon,lang,units)
                .catch { err -> _mutableResponseList.value = ApiState.Fail(err)}

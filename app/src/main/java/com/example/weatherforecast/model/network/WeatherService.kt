@@ -11,8 +11,8 @@ interface WeatherService {
     suspend fun getCurrentWeather(@Query("lat") lat: String?,
                                   @Query("lon") lon: String?,
                                   @Query("appid") appId:String= Constants.ApiKey,
-                                  @Query("lang") lang:String,
-                                  @Query("units") units:String ): Weather
+                                  @Query("lang") lang:String?,
+                                  @Query("units") units:String? ): Weather
     @GET("onecall?")
     suspend fun getCurrentWeatherTCallBack(@Query("lat") lat: String?,
                                            @Query("lon") lon: String?,

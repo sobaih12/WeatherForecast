@@ -8,5 +8,6 @@ object Constants {
     const val UNITS_CELSIUS="metric"
     const val UNITS_FAHRENHEIT="imperial"
     const val UNITS_DEFAULT="default"
-    const val SPLASH_DISPLAY_LENGTH = 300L
+    const val SPLASH_DISPLAY_LENGTH = 3000L
+
 }

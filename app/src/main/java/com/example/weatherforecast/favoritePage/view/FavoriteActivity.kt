@@ -33,6 +33,10 @@ class FavoriteActivity : AppCompatActivity(),OnDeleteClickListener {
         val repository = WeatherRepository.getInstance(localData = LocalDataSource.getInstance(this), remoteData =  remoteDataSource)
         favoriteViewModelFactory = FavoriteViewModelFactory(repository)
 
+
+
+
+
         favoriteAdapter = FavoriteAdapter(this,this)
         binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.favoriteRecyclerView.adapter = favoriteAdapter
@@ -50,7 +54,6 @@ class FavoriteActivity : AppCompatActivity(),OnDeleteClickListener {
         binding.home.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-            
         }
     }
 

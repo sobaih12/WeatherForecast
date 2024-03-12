@@ -12,12 +12,14 @@ interface IWeatherRepository {
     fun insertFavorite(favorite: Favorite)
     fun deleteFavorite(favorite: Favorite)
 
+    fun updateAll(favorites: Favorite)
+
 
     //retrofit
     suspend fun getCurrentWeather(
         lat: String?,
         lon: String?,
-        lang: String = Constants.LANGUAGE_EN,
-        units: String = Constants.UNITS_DEFAULT
+        lang: String? = Constants.LANGUAGE_EN,
+        units: String? = Constants.UNITS_DEFAULT
     ): Flow<Weather>
 }

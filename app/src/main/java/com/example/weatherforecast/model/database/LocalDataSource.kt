@@ -29,4 +29,8 @@ class LocalDataSource private constructor(context: Context):ILocalDataSource {
     override fun delete(favorite: Favorite) {
         weatherDao.delete(favorite)
     }
+
+    override fun updateAll(favorites: Favorite) {
+        weatherDao.updateAll(favorites)
+    }
 }

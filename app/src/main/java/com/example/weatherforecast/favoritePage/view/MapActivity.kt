@@ -100,7 +100,8 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback {
                                     favMain = it.weatherItem.current?.weather?.get(0)?.main,
                                     favTemp = it.weatherItem.current?.temp.toString().toDouble(),
                                     favMin = it.weatherItem.daily?.get(0)?.temp?.min.toString().toDouble(),
-                                    favMax = it.weatherItem.daily?.get(0)?.temp?.max.toString().toDouble()
+                                    favMax = it.weatherItem.daily?.get(0)?.temp?.max.toString().toDouble(),
+                                    time = it.weatherItem.current?.dt
                                 )
                                 homeViewModel.addToFavorite(favorite)
                                 Toast.makeText(this@MapActivity, "${Converter.getAddressEnglish(this@MapActivity,latitude,longitude)} Added to Favorite Model", Toast.LENGTH_SHORT).show()

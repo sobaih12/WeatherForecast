@@ -36,11 +36,15 @@ class WeatherRepository private constructor(
         localData.delete(favorite)
     }
 
+    override fun updateAll(favorites:Favorite) {
+        localData.updateAll(favorites)
+    }
+
     override suspend fun getCurrentWeather(
         lat: String?,
         lon: String?,
-        lang: String,
-        units: String
+        lang: String?,
+        units: String?
     ): Flow<Weather> = flow{
          emit(remoteData.getCurrentWeather(lat = lat, lon =lon, lang =lang, units = units))
     }
