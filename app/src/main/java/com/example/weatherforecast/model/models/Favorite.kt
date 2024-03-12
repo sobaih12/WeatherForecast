@@ -13,6 +13,5 @@ data class Favorite(
     val favMain: String?,
     val favTemp: Double?,
     val favMin: Double? ,
-    val favMax: Double?,
-    val time :Int?
+    val favMax: Double?
 )

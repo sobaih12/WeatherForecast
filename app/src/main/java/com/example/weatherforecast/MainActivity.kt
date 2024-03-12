@@ -82,8 +82,7 @@ class MainActivity : AppCompatActivity() {
                                        favMain = it.weatherItem.current?.weather?.get(0)?.main,
                                        favTemp = it.weatherItem.current?.temp.toString().toDouble(),
                                        favMin = it.weatherItem.daily?.get(0)?.temp?.min.toString().toDouble(),
-                                       favMax = it.weatherItem.daily?.get(0)?.temp?.max.toString().toDouble(),
-                                       time = 1
+                                       favMax = it.weatherItem.daily?.get(0)?.temp?.max.toString().toDouble()
                                    )
                                    favoriteViewModel.updateFavoriteList(favorite)
                                    isUpdated = true
