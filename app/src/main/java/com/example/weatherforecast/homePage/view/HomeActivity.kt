@@ -8,6 +8,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
     private var initialY = 0f
     private var initialHeight = 0
     private val minHeightInDp = 324
+    private var isChanged = false
 
 
     override fun onResume() {
@@ -52,20 +54,84 @@ class HomeActivity : AppCompatActivity() {
             homeViewModel.responseList.collect{
                 when(it){
                     is ApiState.Success ->{
-                        val address = Converter.getAddressEnglish(this@HomeActivity,latitude,longitude)
-                        val currentTemp = Converter.convertTemperatureToString(it.weatherItem.current?.temp?.toString())
-                        val weatherDesc = it.weatherItem.current?.weather?.get(0)?.main
-                        switchBetweenHourlyAndDaily(20.0F,16.0F,
-                            R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
+                        if(PreferenceManager.getLanguage(this@HomeActivity)==Constants.LANGUAGE_EN){
+                            val address = Converter.getAddressEnglish(this@HomeActivity,latitude,longitude)
+                            binding.cityName.text = address
+                        }else{
+                            val address = Converter.getAddressArabic(this@HomeActivity,latitude,longitude)
+                            binding.cityName.text = address
+                        }
+                        if (PreferenceManager.getTempUnit(this@HomeActivity)==Constants.UNITS_CELSIUS){
+                            if (PreferenceManager.getLanguage(this@HomeActivity)==Constants.LANGUAGE_EN){
+                                val currentTemp = Converter.convertToCelsius(it.weatherItem.current?.temp?.toString())
+                                val weatherDesc = it.weatherItem.current?.weather?.get(0)?.description
+                                binding.tempDesc.text = "$currentTemp | $weatherDesc"
+                            }else{
+                                val currentTemp = Converter.convertToCelsiusArabic(it.weatherItem.current?.temp?.toString())
+                                val weatherDesc = it.weatherItem.current?.weather?.get(0)?.description
+                                binding.tempDesc.text = "$currentTemp | $weatherDesc"
+                            }
+                        }else if(PreferenceManager.getTempUnit(this@HomeActivity)==Constants.UNITS_FAHRENHEIT){
+                            if (PreferenceManager.getLanguage(this@HomeActivity)==Constants.LANGUAGE_EN){
+                                val currentTemp = Converter.convertToFahrenheit(it.weatherItem.current?.temp?.toString())
+                                val weatherDesc = it.weatherItem.current?.weather?.get(0)?.description
+                                binding.tempDesc.text = "$currentTemp | $weatherDesc"
+                            }else{
+                                val currentTemp = Converter.convertToFahrenheitArabic(it.weatherItem.current?.temp?.toString())
+                                val weatherDesc = it.weatherItem.current?.weather?.get(0)?.description
+                                binding.tempDesc.text = "$currentTemp | $weatherDesc"
+                            }
+                        }else{
+                            if(PreferenceManager.getLanguage(this@HomeActivity)==Constants.LANGUAGE_EN){
+                                val currentTemp = Converter.convertToKelvin(it.weatherItem.current?.temp?.toString())
+                                val weatherDesc = it.weatherItem.current?.weather?.get(0)?.description
+                                binding.tempDesc.text = "$currentTemp | $weatherDesc"
+                            }else{
+                                val currentTemp = Converter.convertToKelvinArabic(it.weatherItem.current?.temp?.toString())
+                                val weatherDesc = it.weatherItem.current?.weather?.get(0)?.description
+                                binding.tempDesc.text = "$currentTemp | $weatherDesc"
+                            }
+                        }
+                        binding.humidity.text = it.weatherItem.current?.humidity.toString()+"%"
+                        binding.clouds.text = it.weatherItem.current?.clouds.toString()+"%"
+                        binding.pressure.text = it.weatherItem.current?.pressure.toString()+"hPa"
+
+                        if (PreferenceManager.getWindUnit(this@HomeActivity)==Constants.WIND_SPEED_KILO){
+                            if(PreferenceManager.getTempUnit(this@HomeActivity)==Constants.UNITS_DEFAULT||PreferenceManager.getTempUnit(this@HomeActivity)==Constants.UNITS_CELSIUS){
+                                val windSpeedMps = it.weatherItem.current?.wind_speed
+                                val windSpeedKmh = windSpeedMps?.let {
+                                    Converter.convertMpsToKmh(it)
+                                }
+                                binding.windSpeed.text = windSpeedKmh?.toInt().toString()+" k/hr"
+                            }else{
+                                val windSpeedMps = it.weatherItem.current?.wind_speed
+                                val windSpeedKmh = windSpeedMps?.let {
+                                    Converter.convertMphToKmh(it)
+                                }
+                                binding.windSpeed.text = windSpeedKmh?.toInt().toString()+" k/hr"                            }
+                        }else{
+                            if(PreferenceManager.getTempUnit(this@HomeActivity)==Constants.UNITS_DEFAULT||PreferenceManager.getTempUnit(this@HomeActivity)==Constants.UNITS_CELSIUS){
+                                val windSpeedMps = it.weatherItem.current?.wind_speed
+                                val windSpeedMph = windSpeedMps?.let {
+                                    Converter.convertMpsToMph(it)
+                                }
+                                binding.windSpeed.text = windSpeedMph?.toInt().toString()+" M/hr"
+                            }else{
+                                val windSpeedMps = it.weatherItem.current?.wind_speed
+                                binding.windSpeed.text = windSpeedMps?.toInt().toString()+" M/hr"                            }
+                        }
+
+
+                        switchBetweenHourlyAndDaily(24.0F,18.0F, R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
                         hourlyAdapter.submitList(it.weatherItem.hourly)
                         dailyAdapter.submitList(it.weatherItem.daily)
-                        binding.cityName.text = address
-                        binding.tempDesc.text = "$currentTemp | $weatherDesc"
+
+
                         binding.dailyForecast.setOnClickListener {
-                            switchBetweenHourlyAndDaily(16.0F,20.0F,R.color.grey,R.color.white,View.INVISIBLE,View.VISIBLE)
+                            switchBetweenHourlyAndDaily(18.0F,24.0F,R.color.grey,R.color.white,View.INVISIBLE,View.VISIBLE)
                         }
                         binding.hourlyForecast.setOnClickListener {
-                            switchBetweenHourlyAndDaily(20.0F,16.0F,R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
+                            switchBetweenHourlyAndDaily(24.0F,18.0F,R.color.white,R.color.grey,View.VISIBLE,View.INVISIBLE)
                         }
                     }
                     is ApiState.Loading ->{
@@ -85,11 +151,11 @@ class HomeActivity : AppCompatActivity() {
         val repository = WeatherRepository.getInstance(localData = LocalDataSource.getInstance(this), remoteData =  remoteDataSource)
         homeViewModelFactory = HomeViewModelFactory(repository)
 
-        hourlyAdapter = HourlyAdapter()
+        hourlyAdapter = HourlyAdapter(this)
         binding.hourlyRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.hourlyRecyclerView.adapter = hourlyAdapter
 
-        dailyAdapter = DailyAdapter()
+        dailyAdapter = DailyAdapter(this)
         binding.dailyRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.dailyRecyclerView.adapter = dailyAdapter
 
@@ -103,7 +169,7 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 DragEvent.ACTION_DRAG_STARTED -> {
-                    Log.i("TAG", "Samir: ACTION_DRAG_STARTED")
+                    Log.i("TAG", "Mostafa: ACTION_DRAG_STARTED")
                     val layoutParams = view.layoutParams
                     if (event.y < 0) {
                         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -120,7 +186,7 @@ class HomeActivity : AppCompatActivity() {
                         .y(newY)
                         .setDuration(0)
                         .start()
-                    Log.i("TAG", "Samir: ACTION_DRAG_ENDED")
+                    Log.i("TAG", "Mostafa: ACTION_DRAG_ENDED")
 
                     true
                 }else -> false
@@ -139,6 +205,30 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        var originalTopToTop: Int = 0
+        var originalTopToBottom: Int = 0
+        var originalBottomToBottom: Int = 0
+        val bottomSheetLayoutParams = binding.bottomSheet.layoutParams as ConstraintLayout.LayoutParams
+        originalTopToTop = bottomSheetLayoutParams.topToTop
+        originalTopToBottom = bottomSheetLayoutParams.topToBottom
+        originalBottomToBottom = bottomSheetLayoutParams.bottomToBottom
+        binding.bottomSheet.setOnClickListener {
+            val bottomSheet = binding.bottomSheet
+            val layoutParams = bottomSheet.layoutParams as ConstraintLayout.LayoutParams
+            if (!isChanged) {
+                layoutParams.topToBottom = binding.tempDesc.id
+                layoutParams.bottomToBottom = binding.fakeView.id
+                binding.dataLayout.visibility = View.VISIBLE
+                isChanged = true
+            } else {
+                layoutParams.topToTop = originalTopToTop
+                layoutParams.topToBottom = originalTopToBottom
+                layoutParams.bottomToBottom = originalBottomToBottom
+                binding.dataLayout.visibility = View.GONE
+                isChanged = false
+            }
+            bottomSheet.layoutParams = layoutParams
+        }
     }
     private fun switchBetweenHourlyAndDaily(hourlySize: Float, dailySize:Float, hourlyColor: Int, dailyColor:Int, hourlyVisibility: Int, dailyVisibility:Int) {
         binding.hourlyForecast.textSize = hourlySize

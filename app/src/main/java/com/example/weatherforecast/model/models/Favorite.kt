@@ -9,7 +9,7 @@ data class Favorite(
     @PrimaryKey()
     @NotNull
     val favLatitude: Double,
-    val favLongitude: Double?,
+    val favLongitude: Double,
     val favMain: String?,
     val favTemp: Double?,
     val favMin: Double? ,

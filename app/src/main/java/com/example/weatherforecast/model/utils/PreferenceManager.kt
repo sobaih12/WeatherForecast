@@ -8,6 +8,7 @@ object PreferenceManager {
     private const val KEY_LANGUAGE = "app_language"
     private const val KEY_LATITUDE = "latitude"
     private const val KEY_LONGITUDE = "longitude"
+    private const val KEY_WIND_SPEED = "wind_speed"
 
     fun saveTempUnit(context: Context, unit: String) {
         val editor = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit()
@@ -18,6 +19,16 @@ object PreferenceManager {
     fun getTempUnit(context: Context): String? {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         return prefs.getString(KEY_TEMP_UNIT, Constants.UNITS_CELSIUS)
+    }
+    fun saveWindUnit(context: Context, unit: String) {
+        val editor = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit()
+        editor.putString(KEY_WIND_SPEED, unit)
+        editor.apply()
+    }
+
+    fun getWindUnit(context: Context): String? {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(KEY_WIND_SPEED, Constants.WIND_SPEED_KILO)
     }
 
     fun saveLanguage(context: Context, language: String) {

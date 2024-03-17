@@ -14,5 +14,5 @@ data class Current(
 	val sunset: Int? = null,
 	val weather: List<WeatherItem?>? = null,
 	val humidity: Int? = null,
-	val windSpeed: Any? = null
+	val wind_speed: Double? = null
 )

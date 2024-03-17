@@ -18,5 +18,5 @@ interface WeatherDao {
     @Delete
     fun delete(favorite: Favorite)
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateAll(vararg favorites: Favorite)
+    fun updateAll(favorites: Favorite)
 }

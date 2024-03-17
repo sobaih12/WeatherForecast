@@ -4,4 +4,5 @@ import com.example.weatherforecast.model.models.Favorite
 
 interface OnDeleteClickListener {
     fun onDeleteFromFavorite(favorite: Favorite)
+    fun onNavigateToDetails(favorite: Favorite)
 }

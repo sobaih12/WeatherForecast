@@ -97,7 +97,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback {
                                 val favorite = Favorite(
                                     favLatitude = latitude,
                                     favLongitude = longitude,
-                                    favMain = it.weatherItem.current?.weather?.get(0)?.main,
+                                    favMain = it.weatherItem.current?.weather?.get(0)?.description,
                                     favTemp = it.weatherItem.current?.temp.toString().toDouble(),
                                     favMin = it.weatherItem.daily?.get(0)?.temp?.min.toString().toDouble(),
                                     favMax = it.weatherItem.daily?.get(0)?.temp?.max.toString().toDouble()

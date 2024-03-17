@@ -15,6 +15,7 @@ class SettingActivity : AppCompatActivity() {
 
         val language = PreferenceManager.getLanguage(this)
         val tempUnit = PreferenceManager.getTempUnit(this)
+        val windUnit = PreferenceManager.getWindUnit(this)
 
         binding.apply {
             when (language) {
@@ -25,6 +26,10 @@ class SettingActivity : AppCompatActivity() {
                 Constants.UNITS_CELSIUS -> celsiusRadioButton.isChecked = true
                 Constants.UNITS_FAHRENHEIT -> fahrenheitRadioButton.isChecked = true
                 Constants.UNITS_DEFAULT -> kelvinRadioButton.isChecked = true
+            }
+            when(windUnit){
+                Constants.WIND_SPEED_KILO -> kilometerRadioButton.isChecked = true
+                Constants.WIND_SPEED_MILE -> milesRadioButton.isChecked = true
             }
 
             binding.apply {
@@ -42,6 +47,12 @@ class SettingActivity : AppCompatActivity() {
                 }
                 kelvinRadioButton.setOnClickListener {
                     PreferenceManager.saveTempUnit(this@SettingActivity, Constants.UNITS_DEFAULT)
+                }
+                kilometerRadioButton.setOnClickListener {
+                    PreferenceManager.saveWindUnit(this@SettingActivity,Constants.WIND_SPEED_KILO)
+                }
+                milesRadioButton.setOnClickListener {
+                    PreferenceManager.saveWindUnit(this@SettingActivity,Constants.WIND_SPEED_MILE)
                 }
             }
 

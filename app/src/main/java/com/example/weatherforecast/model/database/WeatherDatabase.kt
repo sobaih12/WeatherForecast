@@ -16,7 +16,7 @@ abstract class WeatherDatabase: RoomDatabase() {
             return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(context.applicationContext,
                     WeatherDatabase::class.java,
-                    "weather_table").build()
+                    "weather.dp").build()
                 INSTANCE = instance
                 instance
             }
